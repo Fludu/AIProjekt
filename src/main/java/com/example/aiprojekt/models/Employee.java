@@ -40,7 +40,7 @@ public class Employee {
     private double salary;
     @ManyToOne
     private Position positions;
-    @ManyToMany(mappedBy = "employees")
+    @ManyToMany()
     @JsonIgnore
     private List<Company> companies;
 

@@ -3,3 +3,6 @@ spring:
     username: postgres
     url: jdbc:postgresql://localhost:5432/Firmy
     password: '12345'
+  jpa:
+    hibernate:
+      ddl-auto: create
