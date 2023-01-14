@@ -6,3 +6,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+cors:
+  allowUrl: "*"
+jwt:
+  secret: secret_code
+  expirationTime: 30h
