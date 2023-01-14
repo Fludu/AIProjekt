@@ -55,7 +55,7 @@ public class CompanyService {
         employee.addCompany(company);
 
         employeeRepository.save(employee);
-        companyRepository.save(company);
+
     }
 
     @Transactional
