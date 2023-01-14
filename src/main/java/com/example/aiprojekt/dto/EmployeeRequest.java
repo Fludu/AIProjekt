@@ -2,19 +2,22 @@ package com.example.aiprojekt.dto;
 
 import com.example.aiprojekt.models.Employee;
 import com.example.aiprojekt.models.Position;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
 public class EmployeeRequest {
 
-    @NotNull
+    @NotBlank
     String name;
-    @NotNull
+    @NotBlank
     String secondName;
-    @NotNull
+    @Email
     String email;
-    @NotNull
+    @NotBlank
     String position;
     @NotNull
     double salary;

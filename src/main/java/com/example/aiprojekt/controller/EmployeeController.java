@@ -1,6 +1,7 @@
 package com.example.aiprojekt.controller;
 
 import com.example.aiprojekt.dto.CompanyRequest;
+import com.example.aiprojekt.dto.EmployeeInfoDto;
 import com.example.aiprojekt.dto.EmployeeRequest;
 import com.example.aiprojekt.models.Company;
 import com.example.aiprojekt.models.Employee;
@@ -36,9 +37,9 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> createEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
-        Employee employee = employeeService.saveEmployee(employeeRequest);
-        return ResponseEntity.ok(employee);
+    public ResponseEntity<EmployeeInfoDto> createEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
+        EmployeeInfoDto employeeInfoDto = employeeService.saveEmployee(employeeRequest);
+        return ResponseEntity.ok(employeeInfoDto);
     }
 
     @DeleteMapping("/{email}")

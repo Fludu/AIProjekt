@@ -37,6 +37,7 @@ public class Employee {
     @NotNull
     private double salary;
     @ManyToOne
+    @JsonIgnore
     private Position positions;
     @ManyToMany()
     @JsonIgnore

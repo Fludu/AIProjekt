@@ -1,5 +1,6 @@
 package com.example.aiprojekt.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -23,6 +24,7 @@ public class Position {
     private String name;
 
     @OneToMany
+    @JsonIgnore
     private List<Employee> employees;
 
     public Position() {
@@ -31,5 +33,9 @@ public class Position {
 
     public Position (String name) {
         this.name = name;
+    }
+
+    public void addEmployee (Employee employee) {
+        employees.add(employee);
     }
 }

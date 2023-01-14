@@ -1,6 +1,8 @@
 package com.example.aiprojekt.service;
 
 import com.example.aiprojekt.Exception.EmailBusyException;
+import com.example.aiprojekt.Exception.PositionNotFoundException;
+import com.example.aiprojekt.dto.EmployeeInfoDto;
 import com.example.aiprojekt.dto.EmployeeRequest;
 import com.example.aiprojekt.models.Employee;
 import com.example.aiprojekt.models.Position;
@@ -28,9 +30,20 @@ public class EmployeeService {
         employeeRepository.delete(employeeByEmail);
     }
 
-    public Employee saveEmployee(EmployeeRequest employee) {
+    @Transactional
+    public EmployeeInfoDto saveEmployee(EmployeeRequest employee) {
         Position position = positionRepository.findByName(employee.getPosition());
-        return employeeRepository.save(EmployeeRequest.of(employee, position));
+
+        if(position == null) {
+            throw new PositionNotFoundException(employee.getPosition());
+        }
+        if(employeeRepository.existsByEmail(employee.getEmail())) {
+            throw new EmailBusyException(employee.getEmail());
+        }
+        Employee savedEmployee = employeeRepository.save(EmployeeRequest.of(employee, position));
+        position.addEmployee(savedEmployee);
+
+        return EmployeeInfoDto.of(savedEmployee);
     }
 
     @Transactional
