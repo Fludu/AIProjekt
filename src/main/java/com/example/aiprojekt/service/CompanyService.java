@@ -1,6 +1,7 @@
 package com.example.aiprojekt.service;
 
 import com.example.aiprojekt.Exception.CompanyNotFoundException;
+import com.example.aiprojekt.dto.CompanyInfoDto;
 import com.example.aiprojekt.dto.CompanyRequest;
 import com.example.aiprojekt.models.Company;
 import com.example.aiprojekt.models.Employee;
@@ -10,7 +11,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,12 +22,25 @@ public class CompanyService {
     private final EmployeeRepository employeeRepository;
 
 
-    public List<Company> getAllCompanies() {
-        return companyRepository.findAll();
+    public List<CompanyInfoDto> getAllCompanies() {
+        return companyRepository.findAll().stream().map(CompanyInfoDto::of).collect(Collectors.toList());
+    }
+
+    public CompanyInfoDto getCompanyById(String companyId) {
+        Company company = companyRepository.findById(companyId).orElseThrow(() -> new CompanyNotFoundException(companyId));
+        return CompanyInfoDto.of(company);
     }
 
     public void deleteCompanyById(String id) {
-        companyRepository.deleteById(id);
+        Company company = companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
+            if (company.getEmployees() != null) {
+                company.getEmployees()
+                        .forEach(employee -> {
+                            employee.setCompanies(new ArrayList<>());
+                            company.setEmployees(new ArrayList<>());
+                        });
+            }
+        companyRepository.delete(company);
     }
 
     public Company saveCompany(CompanyRequest companyRequest) {
@@ -41,10 +57,6 @@ public class CompanyService {
         company.setCity(companyRequest.getCity());
         company.setIndustryType(companyRequest.getIndustryType());
         return companyRepository.save(company);
-    }
-
-    public Company getCompanyById(String id) {
-        return (companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id)));
     }
 
     public void assignEmployeeToCompany(String companyId, String emailEmployee) {

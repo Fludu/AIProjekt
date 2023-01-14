@@ -14,27 +14,23 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Builder
-public class Position {
+public class Role {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-
     private String name;
 
-
-
-
-    @OneToMany(mappedBy = "positions")
+    @OneToMany(mappedBy = "role")
     @JsonIgnore
     private List<Employee> employees;
 
-    public Position() {
+    public Role() {
 
     }
 
-    public Position(String name) {
+    public Role(String name) {
         this.name = name;
         this.employees = new ArrayList<>();
     }

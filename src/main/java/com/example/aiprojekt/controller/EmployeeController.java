@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,9 +32,17 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public ResponseEntity<List<Employee>> getEmployees() {
-        List<Employee> employees = employeeService.getAllEmployees();
+    public ResponseEntity<List<EmployeeInfoDto>> getEmployees() {
+        List<EmployeeInfoDto> employees = employeeService.getAllEmployees();
         return ResponseEntity.ok(employees);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EmployeeInfoDto> getEmployeeById(
+            @PathVariable String id
+    ) {
+        EmployeeInfoDto employee = employeeService.getEmployeeById(id);
+        return ResponseEntity.ok(employee);
     }
 
     @PostMapping

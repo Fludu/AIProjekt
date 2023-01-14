@@ -1,10 +1,9 @@
 package com.example.aiprojekt.dto;
 
 import com.example.aiprojekt.models.Employee;
-import com.example.aiprojekt.models.Position;
+import com.example.aiprojekt.models.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
@@ -18,18 +17,18 @@ public class EmployeeRequest {
     @Email
     String email;
     @NotBlank
-    String position;
+    String role;
     @NotNull
     double salary;
 
 
-    public static Employee of(EmployeeRequest employeeRequest, Position position) {
+    public static Employee of(EmployeeRequest employeeRequest, Role role) {
         return new Employee(
                 employeeRequest.getName(),
                 employeeRequest.getSecondName(),
                 employeeRequest.getEmail(),
                 employeeRequest.getSalary(),
-                position
+                role
         );
     }
 }

@@ -38,18 +38,19 @@ public class Employee {
     private double salary;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "position_id")
-    private Position positions;
+    @JoinColumn(name = "role_id")
+    private Role role;
     @ManyToMany(mappedBy = "employees", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Company> companies;
 
 
-    public Employee(String name, String secondName, String email, double salary, Position position) {
+    public Employee(String name, String secondName, String email, double salary, Role role) {
         this.name = name;
         this.secondName = secondName;
         this.email = email;
         this.salary = salary;
-        this.positions = position;
+        this.role = role;
         this.companies = new ArrayList<>();
     }
 

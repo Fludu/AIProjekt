@@ -37,10 +37,13 @@ public class Company {
 
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {
+            CascadeType.ALL
+    }, fetch = FetchType.EAGER)
     @JoinTable(name = "Company_Employee",
             joinColumns = {@JoinColumn(name = "company_id")},
             inverseJoinColumns = {@JoinColumn(name = "employee_id")})
+    @JsonIgnore
     private List<Employee> employees;
 
     public void assignEmployee(Employee employee) {

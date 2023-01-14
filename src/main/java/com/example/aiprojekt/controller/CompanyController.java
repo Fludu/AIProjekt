@@ -1,10 +1,12 @@
 package com.example.aiprojekt.controller;
 
+import com.example.aiprojekt.dto.CompanyInfoDto;
 import com.example.aiprojekt.dto.CompanyRequest;
 import com.example.aiprojekt.models.Company;
 import com.example.aiprojekt.service.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +21,17 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @GetMapping
-    public ResponseEntity<List<Company>> getCompanies() {
-        List<Company> companies = companyService.getAllCompanies();
+    public ResponseEntity<List<CompanyInfoDto>> getCompanies() {
+        List<CompanyInfoDto> companies = companyService.getAllCompanies();
         return ResponseEntity.ok(companies);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CompanyInfoDto> getCompanyById(
+            @PathVariable String id
+    ) {
+        CompanyInfoDto companyById = companyService.getCompanyById(id);
+        return ResponseEntity.ok(companyById);
     }
 
     @PostMapping
@@ -31,9 +41,9 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Company> deleteCompany(@PathVariable String id) {
-        Company company = companyService.getCompanyById(id);
-        return ResponseEntity.ok(company);
+    public ResponseEntity<Void> deleteCompany(@PathVariable String id) {
+       companyService.deleteCompanyById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
