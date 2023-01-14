@@ -60,7 +60,7 @@ public class EmployeeService {
             throw new EmailBusyException(employee.getEmail());
         }
 
-        if(employee.getSalary() <= 0) {
+        if (employee.getSalary() <= 0) {
             throw new SalaryMustBePositive();
         }
 
@@ -80,9 +80,9 @@ public class EmployeeService {
         Employee employeeByEmail = employeeRepository.findEmployeeByEmail(email);
         Role role = roleRepository.findByName(employeeRequest.getRole());
 
-        if(employeeByEmail != null){
+        if (employeeByEmail != null) {
             employeeByEmail.setEmail(employeeRequest.getEmail());
-            if(employeeRequest.getSalary() <= 0) {
+            if (employeeRequest.getSalary() <= 0) {
                 throw new SalaryMustBePositive();
             }
             employeeByEmail.setSalary(employeeRequest.getSalary());

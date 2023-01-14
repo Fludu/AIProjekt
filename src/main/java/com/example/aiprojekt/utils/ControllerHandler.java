@@ -30,8 +30,8 @@ public class ControllerHandler {
     }
 
     @ExceptionHandler(SalaryMustBePositive.class)
-    public ResponseEntity<ErrorMessageDto> handleSalaryMustBePositivceException(SalaryMustBePositive exception) {
-        return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorMessageDto> handleSalaryMustBePositiveException(SalaryMustBePositive exception) {
+        return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EmailBusyException.class)

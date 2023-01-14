@@ -45,10 +45,10 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<EmployeeInfoDto> createEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
-        EmployeeInfoDto employeeInfoDto = employeeService.saveEmployee(employeeRequest);
-        return ResponseEntity.ok(employeeInfoDto);
+    public EmployeeInfoDto createEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
+        return employeeService.saveEmployee(employeeRequest);
     }
 
     @DeleteMapping("/{email}")

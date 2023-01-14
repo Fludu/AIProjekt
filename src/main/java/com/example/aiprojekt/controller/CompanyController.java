@@ -34,10 +34,10 @@ public class CompanyController {
         return ResponseEntity.ok(companyById);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<Company> createCompany(@Valid @RequestBody CompanyRequest companyRequest) {
-        Company company = companyService.saveCompany(companyRequest);
-        return ResponseEntity.ok(company);
+    public Company createCompany(@Valid @RequestBody CompanyRequest companyRequest) {
+        return companyService.saveCompany(companyRequest);
     }
 
     @DeleteMapping("/{id}")
@@ -59,7 +59,7 @@ public class CompanyController {
         companyService.assignEmployeeToCompany(companyId, emailEmployee);
     }
 
-    @PatchMapping("/{companyId}/employees/{emailEmployee}")
+    @DeleteMapping("/{companyId}/employees/{emailEmployee}")
     void deleteEmployeeFromCompany(
             @PathVariable String companyId,
             @PathVariable String emailEmployee
