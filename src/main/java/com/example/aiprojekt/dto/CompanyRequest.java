@@ -6,13 +6,11 @@ import lombok.Getter;
 
 @Getter
 public class CompanyRequest {
+
     @NotNull
-    @NotEmpty
-    private String name;
+    String name;
     @NotNull
-    @NotEmpty
-    private String city;
+    String city;
     @NotNull
-    @NotEmpty
-    private String industryType;
+    String industryType;
 }

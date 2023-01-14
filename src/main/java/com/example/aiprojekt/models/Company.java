@@ -35,4 +35,7 @@ public class Company {
     @JsonIgnore
     private List<Employee> employees;
 
+    public void assignEmployee(Employee employee) {
+        employees.add(employee);
+    }
 }

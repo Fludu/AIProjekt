@@ -35,8 +35,6 @@ public class Employee {
     @Email
     private String email;
     @NotNull
-    private String position;
-    @NotNull
     private double salary;
     @ManyToOne
     private Position positions;
@@ -44,5 +42,17 @@ public class Employee {
     @JsonIgnore
     private List<Company> companies;
 
+
+    public Employee(String name, String secondName, String email, double salary, Position position) {
+        this.name = name;
+        this.secondName = secondName;
+        this.email = email;
+        this.salary = salary;
+        this.positions = position;
+    }
+
+    public void addCompany(Company company) {
+        companies.add(company);
+    }
 
 }

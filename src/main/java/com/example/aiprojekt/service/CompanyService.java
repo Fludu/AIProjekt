@@ -3,7 +3,10 @@ package com.example.aiprojekt.service;
 import com.example.aiprojekt.Exception.CompanyNotFoundException;
 import com.example.aiprojekt.dto.CompanyRequest;
 import com.example.aiprojekt.models.Company;
+import com.example.aiprojekt.models.Employee;
 import com.example.aiprojekt.repository.CompanyRepository;
+import com.example.aiprojekt.repository.EmployeeRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyService {
     private final CompanyRepository companyRepository;
+    private final EmployeeRepository employeeRepository;
 
 
     public List<Company> getAllCompanies() {
@@ -43,4 +47,24 @@ public class CompanyService {
         return (companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id)));
     }
 
+    public void assignEmployeeToCompany(String companyId, String emailEmployee) {
+        Company company = companyRepository.findById(companyId).orElseThrow(() -> new CompanyNotFoundException(companyId));
+        Employee employee = employeeRepository.findEmployeeByEmail(emailEmployee);
+
+        company.assignEmployee(employee);
+        employee.addCompany(company);
+
+        employeeRepository.save(employee);
+        companyRepository.save(company);
+    }
+
+    @Transactional
+    public void deleteEmployeeFromCompany(String companyId, String emailEmployee) {
+        Company company = companyRepository.findById(companyId).orElseThrow(() -> new CompanyNotFoundException(companyId));
+        Employee employee = employeeRepository.findEmployeeByEmail(emailEmployee);
+
+        company.getEmployees().remove(employee);
+        employee.getCompanies().remove(company);
+
+    }
 }

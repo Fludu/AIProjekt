@@ -3,6 +3,7 @@ package com.example.aiprojekt.controller;
 import com.example.aiprojekt.dto.CompanyRequest;
 import com.example.aiprojekt.models.Company;
 import com.example.aiprojekt.service.CompanyService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class CompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<Company> createCompany(CompanyRequest companyRequest) {
+    public ResponseEntity<Company> createCompany(@Valid @RequestBody CompanyRequest companyRequest) {
         Company company = companyService.saveCompany(companyRequest);
         return ResponseEntity.ok(company);
     }
@@ -36,10 +37,23 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Company> updateCompany(@PathVariable String id, @RequestBody CompanyRequest companyRequest ) {
+    public ResponseEntity<Company> updateCompany(@PathVariable String id, @RequestBody @Valid CompanyRequest companyRequest ) {
         Company company = companyService.updateComapny(id, companyRequest);
         return ResponseEntity.ok(company);
     }
+    @PutMapping("/{companyId}/employees/{emailEmployee}")
+    void assignEmployeeToCompany(
+            @PathVariable String companyId,
+            @PathVariable String emailEmployee
+    ) {
+        companyService.assignEmployeeToCompany(companyId, emailEmployee);
+    }
 
-
+    @PatchMapping("/{companyId}/employees/{emailEmployee}")
+    void deleteEmployeeFromCompany(
+            @PathVariable String companyId,
+            @PathVariable String emailEmployee
+    ) {
+        companyService.deleteEmployeeFromCompany(companyId, emailEmployee);
+    }
 }

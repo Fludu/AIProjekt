@@ -1,5 +1,6 @@
 package com.example.aiprojekt.service;
 
+import com.example.aiprojekt.dto.PositionRequest;
 import com.example.aiprojekt.models.Position;
 import com.example.aiprojekt.repository.PositionRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +18,8 @@ public class PositionService {
         return positionRepository.findAll();
     }
 
-    public void deleteEmployeeById(String id) {
-        positionRepository.deleteById(id);
-    }
 
-    public Position saveEmployee(Position employee) {
-        return positionRepository.save(employee);
-    }
-
-    public void updateEmployee(Position employee) {
-        positionRepository.save(employee);
+    public Position savePosition(PositionRequest positionRequest) {
+        return positionRepository.save(PositionRequest.of(positionRequest));
     }
 }

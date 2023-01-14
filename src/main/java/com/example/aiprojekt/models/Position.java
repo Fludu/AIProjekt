@@ -28,4 +28,8 @@ public class Position {
     public Position() {
 
     }
+
+    public Position (String name) {
+        this.name = name;
+    }
 }
