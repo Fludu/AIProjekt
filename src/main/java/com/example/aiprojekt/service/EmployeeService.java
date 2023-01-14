@@ -60,6 +60,7 @@ public class EmployeeService {
         employeeByEmail.setName(employeeRequest.getName());
         employeeByEmail.setPositions(position);
         employeeByEmail.setSecondName(employeeRequest.getSecondName());
+     //TODO tu nie powinno byc zapisów tzn employeeRepository.save(cos tam?)
 
         return employeeByEmail;
     }

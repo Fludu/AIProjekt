@@ -5,9 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@ToString
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -23,7 +23,10 @@ public class Position {
 
     private String name;
 
-    @OneToMany
+
+
+
+    @OneToMany(mappedBy = "positions")
     @JsonIgnore
     private List<Employee> employees;
 
@@ -31,8 +34,9 @@ public class Position {
 
     }
 
-    public Position (String name) {
+    public Position(String name) {
         this.name = name;
+        this.employees = new ArrayList<>();
     }
 
     public void addEmployee (Employee employee) {

@@ -8,10 +8,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-@ToString
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -38,9 +38,9 @@ public class Employee {
     private double salary;
     @ManyToOne
     @JsonIgnore
+    @JoinColumn(name = "position_id")
     private Position positions;
-    @ManyToMany()
-    @JsonIgnore
+    @ManyToMany(mappedBy = "employees", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Company> companies;
 
 
@@ -50,10 +50,12 @@ public class Employee {
         this.email = email;
         this.salary = salary;
         this.positions = position;
+        this.companies = new ArrayList<>();
     }
 
     public void addCompany(Company company) {
         companies.add(company);
     }
+
 
 }

@@ -8,14 +8,17 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
 
-@ToString
+
 @Getter
 @Setter
 @EqualsAndHashCode
-@AllArgsConstructor
 @Entity
+@AllArgsConstructor
 @Builder
 public class Company {
+    public Company() {
+    }
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -27,15 +30,29 @@ public class Company {
     @NotNull
     private String industryType;
 
-    public Company() {
+    public Company(String name, String city, String industryType) {
+        this.name = name;
+        this.city = city;
+        this.industryType = industryType;
 
     }
 
-    @ManyToMany(mappedBy = "companies")
-    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "Company_Employee",
+            joinColumns = {@JoinColumn(name = "company_id")},
+            inverseJoinColumns = {@JoinColumn(name = "employee_id")})
     private List<Employee> employees;
 
     public void assignEmployee(Employee employee) {
         employees.add(employee);
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", industryType='" + industryType + '\'' +
+                '}';
     }
 }
