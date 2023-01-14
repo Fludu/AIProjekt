@@ -1,41 +1,29 @@
 package com.example.aiprojekt.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Getter
-@Setter
-@EqualsAndHashCode
-@AllArgsConstructor
 @Entity
-@Builder
+@Table(name = "roles")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-
     private String name;
-
-    @OneToMany(mappedBy = "role")
-    @JsonIgnore
-    private List<Employee> employees;
-
-    public Role() {
-
-    }
 
     public Role(String name) {
         this.name = name;
-        this.employees = new ArrayList<>();
-    }
-
-    public void addEmployee (Employee employee) {
-        employees.add(employee);
     }
 }

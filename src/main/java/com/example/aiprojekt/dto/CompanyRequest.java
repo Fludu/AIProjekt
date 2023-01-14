@@ -1,15 +1,16 @@
 package com.example.aiprojekt.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
 public class CompanyRequest {
 
-    @NotNull
+    @NotBlank
     String name;
-    @NotNull
+    @NotBlank
     String city;
-    @NotNull
+    @NotBlank
     String industryType;
 }

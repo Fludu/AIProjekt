@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "cors.allowUrl",
+      "type": "java.lang.String",
+      "description": "Allow URLs to connect with be application."
+    }
+  ]
+}

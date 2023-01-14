@@ -2,18 +2,18 @@ package com.example.aiprojekt.service;
 
 import com.example.aiprojekt.Exception.EmailBusyException;
 import com.example.aiprojekt.Exception.EmployeeNotFoundException;
-import com.example.aiprojekt.Exception.RoleNotFoundException;
+import com.example.aiprojekt.Exception.JobPositionNotFoundException;
 import com.example.aiprojekt.Exception.SalaryMustBePositive;
 import com.example.aiprojekt.dto.EmployeeInfoDto;
 import com.example.aiprojekt.dto.EmployeeRequest;
 import com.example.aiprojekt.models.Employee;
-import com.example.aiprojekt.models.Role;
+import com.example.aiprojekt.models.JobPosition;
 import com.example.aiprojekt.repository.EmployeeRepository;
-import com.example.aiprojekt.repository.RoleRepository;
-import jakarta.transaction.Transactional;
+import com.example.aiprojekt.repository.JobPositionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
-    private final RoleRepository roleRepository;
+    private final JobPositionRepository jobPositionRepository;
 
 
     public List<EmployeeInfoDto> getAllEmployees() {
@@ -51,10 +51,10 @@ public class EmployeeService {
 
     @Transactional
     public EmployeeInfoDto saveEmployee(EmployeeRequest employee) {
-        Role role = roleRepository.findByName(employee.getRole());
+        JobPosition jobPosition = jobPositionRepository.findById(employee.getJobPositionId()).orElseThrow(() -> new JobPositionNotFoundException(employee.getJobPositionId()));
 
-        if (role == null) {
-            throw new RoleNotFoundException(employee.getRole());
+        if (jobPosition == null) {
+            throw new JobPositionNotFoundException(employee.getJobPositionId());
         }
         if (employeeRepository.existsByEmail(employee.getEmail())) {
             throw new EmailBusyException(employee.getEmail());
@@ -64,21 +64,21 @@ public class EmployeeService {
             throw new SalaryMustBePositive();
         }
 
-        Employee savedEmployee = employeeRepository.save(EmployeeRequest.of(employee, role));
-        role.addEmployee(savedEmployee);
+        Employee savedEmployee = employeeRepository.save(EmployeeRequest.of(employee, jobPosition));
+        jobPosition.addEmployee(savedEmployee);
 
         return EmployeeInfoDto.of(savedEmployee);
     }
 
     @Transactional
-    public Employee updateEmployee(String email, EmployeeRequest employeeRequest) {
+    public EmployeeInfoDto updateEmployee(String email, EmployeeRequest employeeRequest) {
 
         if (employeeRepository.existsByEmail(employeeRequest.getEmail()) && !employeeRequest.getEmail().equals(email)) {
             throw new EmailBusyException(employeeRequest.getEmail());
         }
 
         Employee employeeByEmail = employeeRepository.findEmployeeByEmail(email);
-        Role role = roleRepository.findByName(employeeRequest.getRole());
+        JobPosition jobPosition = jobPositionRepository.findById(employeeRequest.getJobPositionId()).orElseThrow(() -> new JobPositionNotFoundException(employeeRequest.getJobPositionId()));
 
         if (employeeByEmail != null) {
             employeeByEmail.setEmail(employeeRequest.getEmail());
@@ -87,9 +87,9 @@ public class EmployeeService {
             }
             employeeByEmail.setSalary(employeeRequest.getSalary());
             employeeByEmail.setName(employeeRequest.getName());
-            employeeByEmail.setRole(role);
+            employeeByEmail.setJobPosition(jobPosition);
             employeeByEmail.setSecondName(employeeRequest.getSecondName());
         }
-        return employeeByEmail;
+        return EmployeeInfoDto.of(employeeByEmail);
     }
 }

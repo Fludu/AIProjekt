@@ -7,10 +7,10 @@ import com.example.aiprojekt.models.Company;
 import com.example.aiprojekt.models.Employee;
 import com.example.aiprojekt.repository.CompanyRepository;
 import com.example.aiprojekt.repository.EmployeeRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,13 +33,13 @@ public class CompanyService {
 
     public void deleteCompanyById(String id) {
         Company company = companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
-            if (company.getEmployees() != null) {
-                company.getEmployees()
-                        .forEach(employee -> {
-                            employee.setCompanies(new ArrayList<>());
-                            company.setEmployees(new ArrayList<>());
-                        });
-            }
+        if (company.getEmployees() != null) {
+            company.getEmployees()
+                    .forEach(employee -> {
+                        employee.setCompanies(new ArrayList<>());
+                        company.setEmployees(new ArrayList<>());
+                    });
+        }
         companyRepository.delete(company);
     }
 

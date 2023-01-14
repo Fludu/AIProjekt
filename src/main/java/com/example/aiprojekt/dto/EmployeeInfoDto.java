@@ -1,6 +1,5 @@
 package com.example.aiprojekt.dto;
 
-import com.example.aiprojekt.models.Company;
 import com.example.aiprojekt.models.Employee;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ public record EmployeeInfoDto(
         String secondName,
         String email,
         double salary,
-        String role,
+        String jobPosition,
         List<String> listOfCompanies
 
 ) {
@@ -23,7 +22,7 @@ public record EmployeeInfoDto(
                 employee.getSecondName(),
                 employee.getEmail(),
                 employee.getSalary(),
-                employee.getRole().getName(),
+                employee.getJobPosition().getName(),
                 fillListOfCompanies(employee)
         );
     }
