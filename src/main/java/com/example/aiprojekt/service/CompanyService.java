@@ -1,6 +1,8 @@
 package com.example.aiprojekt.service;
 
 import com.example.aiprojekt.Exception.CompanyNotFoundException;
+import com.example.aiprojekt.Exception.EmailBusyException;
+import com.example.aiprojekt.Exception.NameBusyException;
 import com.example.aiprojekt.dto.CompanyInfoDto;
 import com.example.aiprojekt.dto.CompanyRequest;
 import com.example.aiprojekt.models.Company;
@@ -44,6 +46,9 @@ public class CompanyService {
     }
 
     public Company saveCompany(CompanyRequest companyRequest) {
+        if (companyRepository.existsByName(companyRequest.getName())) {
+            throw new NameBusyException(companyRequest.getName());
+        }
         Company company = Company.builder()
                 .name(companyRequest.getName())
                 .city(companyRequest.getCity())
@@ -52,6 +57,9 @@ public class CompanyService {
     }
 
     public Company updateComapny(String id, CompanyRequest companyRequest) {
+        if (companyRepository.existsByName(companyRequest.getName())) {
+            throw new NameBusyException(companyRequest.getName());
+        }
         Company company = companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
         company.setName(companyRequest.getName());
         company.setCity(companyRequest.getCity());

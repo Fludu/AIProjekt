@@ -9,4 +9,6 @@ public interface CompanyRepository extends JpaRepository<Company, String> {
 
 
     void deleteById(String id);
+
+    boolean existsByName(String name);
 }
