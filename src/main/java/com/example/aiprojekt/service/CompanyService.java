@@ -1,10 +1,10 @@
 package com.example.aiprojekt.service;
 
 import com.example.aiprojekt.Exception.CompanyNotFoundException;
-import com.example.aiprojekt.Exception.EmailBusyException;
 import com.example.aiprojekt.Exception.NameBusyException;
 import com.example.aiprojekt.dto.CompanyInfoDto;
 import com.example.aiprojekt.dto.CompanyRequest;
+import com.example.aiprojekt.dto.EmployeeInfoDtoWithoutCompany;
 import com.example.aiprojekt.models.Company;
 import com.example.aiprojekt.models.Employee;
 import com.example.aiprojekt.repository.CompanyRepository;
@@ -86,5 +86,31 @@ public class CompanyService {
         company.getEmployees().remove(employee);
         employee.getCompanies().remove(company);
 
+    }
+
+    public List<EmployeeInfoDtoWithoutCompany> getEmployeesNotAssignedToCompany(String companyId) {
+        List<Employee> allEmployees = employeeRepository.findAll();
+        Company company = companyRepository.findById(companyId).orElseThrow(() -> new CompanyNotFoundException(companyId));
+
+        List<Employee> employeesAssignedToCompany = company.getEmployees();
+        List<EmployeeInfoDtoWithoutCompany> employeeInfoDtoAssignedToCompany = new ArrayList<>();
+        if (employeesAssignedToCompany != null) {
+            employeesAssignedToCompany
+                    .forEach(employee -> {
+                        employeeInfoDtoAssignedToCompany.add(
+                                EmployeeInfoDtoWithoutCompany.of(employee));
+                    });
+        }
+
+        List<EmployeeInfoDtoWithoutCompany> employeeInfoDtoWithoutCompanies = new ArrayList<>();
+
+        for (Employee allEmployee : allEmployees) {
+            for (EmployeeInfoDtoWithoutCompany employeeInfoDtoWithoutCompany : employeeInfoDtoAssignedToCompany) {
+                if (!allEmployee.getId().equals(employeeInfoDtoWithoutCompany.id())) {
+                    employeeInfoDtoWithoutCompanies.add(EmployeeInfoDtoWithoutCompany.of(allEmployee));
+                }
+            }
+        }
+        return employeeInfoDtoWithoutCompanies;
     }
 }

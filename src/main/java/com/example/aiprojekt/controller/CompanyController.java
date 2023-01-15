@@ -2,6 +2,7 @@ package com.example.aiprojekt.controller;
 
 import com.example.aiprojekt.dto.CompanyInfoDto;
 import com.example.aiprojekt.dto.CompanyRequest;
+import com.example.aiprojekt.dto.EmployeeInfoDtoWithoutCompany;
 import com.example.aiprojekt.models.Company;
 import com.example.aiprojekt.service.CompanyService;
 import lombok.RequiredArgsConstructor;
@@ -75,5 +76,12 @@ public class CompanyController {
             @PathVariable String emailEmployee
     ) {
         companyService.deleteEmployeeFromCompany(companyId, emailEmployee);
+    }
+
+    @GetMapping("/{companyId}/employees")
+    public List<EmployeeInfoDtoWithoutCompany> getEmployeesAssignedToCompany(
+            @PathVariable String companyId
+    ) {
+        return companyService.getEmployeesNotAssignedToCompany(companyId);
     }
 }
