@@ -59,14 +59,16 @@ public class Initializer {
     private void createEmployees() {
         List<JobPosition> allJobPositions = jobPositionRepository.findAll();
         List<Company> allCompanies = companyRepository.findAll();
-        Employee employee = new Employee("Arek", "Fluda", "arek@wp.pl", 10000, allJobPositions.get(0));
-        employeeRepository.save(employee);
-        companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), employee.getEmail());
+        Employee employee1 = new Employee("Arek", "Fluda", "arek@wp.pl", 10000, allJobPositions.get(0));
+        employeeRepository.save(employee1);
+        Employee save = employeeRepository.save(new Employee("Kacper", "Roda", "kacper@wp.pl", 10000, allJobPositions.get(1)));
+        Employee save1 = employeeRepository.save(new Employee("Kamil", "Zyla", "kamil@wp.pl", 10000, allJobPositions.get(2)));
+        Employee save2 = employeeRepository.save(new Employee("Armin", "Bolen", "armin@wp.pl", 10000, allJobPositions.get(3)));
+        companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), employee1.getEmail());
+        companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), save.getEmail());
+        companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), save1.getEmail());
+        companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), save2.getEmail());
 
-
-        employeeRepository.save(new Employee("Kacper", "Roda", "kacper@wp.pl", 10000, allJobPositions.get(1)));
-        employeeRepository.save(new Employee("Kamil", "Zyla", "kamil@wp.pl", 10000, allJobPositions.get(2)));
-        employeeRepository.save(new Employee("Armin", "Bolen", "armin@wp.pl", 10000, allJobPositions.get(3)));
     }
 
     private void createCompanies() {
