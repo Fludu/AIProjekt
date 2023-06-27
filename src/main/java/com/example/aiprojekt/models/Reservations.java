@@ -42,15 +42,15 @@ public class Reservations {
     @OneToMany
     @JsonIgnore
     @JoinColumn(name = "job_position_id")
-    private List<CarSAssistance> carSAssistances;
+    private List<CarAssistance> carAssistances;
 
 
-    public Reservations(String name, String secondName, String email, double salary, List<CarSAssistance> carSAssistances) {
+    public Reservations(String name, String secondName, String email, double salary, List<CarAssistance> carAssistances) {
         this.name = name;
         this.secondName = secondName;
         this.email = email;
         this.salary = salary;
-        this.carSAssistances = carSAssistances;
+        this.carAssistances = carAssistances;
     }
 
 

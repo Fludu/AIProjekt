@@ -13,7 +13,7 @@ public record ReservationsDTO(
    List<CarAssistanceServiceDTO> carServices
 ) {
     public static ReservationsDTO of(Reservations reservations) {
-        List<CarAssistanceServiceDTO> carAssistanceServiceDTOS = reservations.getCarSAssistances().stream()
+        List<CarAssistanceServiceDTO> carAssistanceServiceDTOS = reservations.getCarAssistances().stream()
                 .map(CarAssistanceServiceDTO::of)
                 .collect(Collectors.toList());
 
