@@ -7,6 +7,7 @@ import com.example.aiprojekt.Exception.EmployeeNotFoundException;
 import com.example.aiprojekt.Exception.JobPositionNotFoundException;
 import com.example.aiprojekt.Exception.SalaryMustBePositive;
 import com.example.aiprojekt.Exception.UnauthorizedProcessException;
+import com.example.aiprojekt.dto.ErrorMessageDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
