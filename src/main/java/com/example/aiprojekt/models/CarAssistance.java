@@ -29,6 +29,8 @@ public class CarAssistance {
 
     private String name;
 
+    private double price;
+
     @OneToMany
     @JsonIgnore
     private List<Reservations> reservations;
@@ -37,8 +39,9 @@ public class CarAssistance {
 
     }
 
-    public CarAssistance(String name) {
+    public CarAssistance(String name, double price) {
         this.name = name;
+        this.price = price;
         this.reservations = new ArrayList<>();
     }
 

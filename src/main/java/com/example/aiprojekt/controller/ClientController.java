@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,13 +33,13 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> createClient(@Valid @RequestBody Client client) {
+    public ResponseEntity<Client> createClient(@RequestBody Client client) {
         Client createdClient = clientService.createClient(client);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdClient);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable String id, @Valid @RequestBody Client client) {
+    public ResponseEntity<Client> updateClient(@PathVariable String id, @RequestBody Client client) {
         return clientService.getClientById(id)
                 .map(existingClient -> {
                     Client updatedClient = clientService.updateClient(id, client);
@@ -49,6 +48,9 @@ public class ClientController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Client> deleteClient(@PathVariable String id) {
+        return ResponseEntity.of(clientService.getClientById(id));
 
-//   s
+    }
 }

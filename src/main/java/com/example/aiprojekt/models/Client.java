@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,7 +23,7 @@ public class Client {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    private String client_id;
     @NotNull
     private String name;
     @NotNull
@@ -32,19 +33,19 @@ public class Client {
     private String email;
     @NotNull
     private String city;
-
+    @OneToMany
+    private List<Reservations> reservations;
 
     public Client(String name, String lastName, String email, String city) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.city = city;
+        this.reservations = new ArrayList<>();
 
 
     }
 
-    @OneToMany
-    private List<Reservations> reservations;
 
     public void assignEmployee(Reservations reservations) {
         this.reservations.add(reservations);

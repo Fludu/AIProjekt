@@ -12,6 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -31,25 +32,20 @@ public class Reservations {
 
     }
 
-    @NotNull
-    private String name;
-    @NotNull
-    private String secondName;
-    @Email
-    private String email;
-    @NotNull
-    private double salary;
+
+    private LocalDateTime localDateTime;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    private Client client;
+
     @OneToMany
     @JsonIgnore
-    @JoinColumn(name = "job_position_id")
     private List<CarAssistance> carAssistances;
 
 
-    public Reservations(String name, String secondName, String email, double salary, List<CarAssistance> carAssistances) {
-        this.name = name;
-        this.secondName = secondName;
-        this.email = email;
-        this.salary = salary;
+    public Reservations(LocalDateTime localDateTime, List<CarAssistance> carAssistances) {
+        this.localDateTime = localDateTime;
         this.carAssistances = carAssistances;
     }
 
