@@ -8,10 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,22 +27,19 @@ public class CarAssistance {
     private String name;
 
     private double price;
-
-    @OneToMany
+    @ManyToOne
     @JsonIgnore
-    private List<Reservations> reservations;
+    private Reservation reservation;
 
     public CarAssistance() {
 
     }
 
-    public CarAssistance(String name, double price) {
+    public CarAssistance(String name, double price, Reservation reservation) {
         this.name = name;
         this.price = price;
-        this.reservations = new ArrayList<>();
+        this.reservation = reservation;
     }
 
-    public void addEmployee(Reservations reservations) {
-        this.reservations.add(reservations);
-    }
+
 }

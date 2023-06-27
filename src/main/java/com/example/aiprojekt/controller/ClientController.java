@@ -1,9 +1,11 @@
 package com.example.aiprojekt.controller;
 
+import com.example.aiprojekt.dto.ClientDTO;
+import com.example.aiprojekt.dto.ClientRequest;
 import com.example.aiprojekt.models.Client;
 import com.example.aiprojekt.service.ClientService;
+import com.example.aiprojekt.Exception.NameIsBussyException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +22,8 @@ public class ClientController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Client>> getAllClients() {
-        List<Client> clients = clientService.getAllClients();
+    public ResponseEntity<List<ClientDTO>> getAllClients() {
+        List<ClientDTO> clients = clientService.getAllClients();
         return ResponseEntity.ok(clients);
     }
 
@@ -33,9 +35,15 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> createClient(@RequestBody Client client) {
-        Client createdClient = clientService.createClient(client);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdClient);
+    public ResponseEntity<ClientDTO> assignResevationToClient(@RequestBody ClientRequest client) throws NameIsBussyException {
+        ClientDTO createdClient = clientService.createClient(client);
+        return ResponseEntity.ok(createdClient);
+    }
+
+    @PostMapping("/{email}/reservation/{id}")
+    public ResponseEntity<ClientDTO> assignResevationToClient(@PathVariable String email, @PathVariable  String reservationId) throws NameIsBussyException {
+        ClientDTO createdClient = clientService.assignReservationToClient(reservationId, email);
+        return ResponseEntity.ok(createdClient);
     }
 
     @PutMapping("/{id}")

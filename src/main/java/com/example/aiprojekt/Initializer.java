@@ -1,8 +1,6 @@
 package com.example.aiprojekt;
 
 import com.example.aiprojekt.models.Client;
-import com.example.aiprojekt.models.Reservations;
-import com.example.aiprojekt.models.CarAssistance;
 import com.example.aiprojekt.models.Role;
 import com.example.aiprojekt.models.User;
 import com.example.aiprojekt.repository.*;
@@ -11,8 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

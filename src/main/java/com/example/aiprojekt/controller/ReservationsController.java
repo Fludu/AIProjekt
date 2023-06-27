@@ -1,6 +1,6 @@
 package com.example.aiprojekt.controller;
 
-import com.example.aiprojekt.models.Reservations;
+import com.example.aiprojekt.models.Reservation;
 import com.example.aiprojekt.service.ReservationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,36 +20,36 @@ public class ReservationsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Reservations>> getAllReservations() {
-        List<Reservations> reservations = reservationsService.getAllReservations();
+    public ResponseEntity<List<Reservation>> getAllReservations() {
+        List<Reservation> reservations = reservationsService.getAllReservations();
         return ResponseEntity.ok(reservations);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Reservations> getReservationsById(@PathVariable String id) {
+    public ResponseEntity<Reservation> getReservationsById(@PathVariable String id) {
         return reservationsService.getReservationsById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Reservations> createReservations(@RequestBody Reservations reservations) {
-        Reservations createdReservations = reservationsService.createReservations(reservations);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdReservations);
+    public ResponseEntity<Reservation> createReservations(@RequestBody Reservation reservation) {
+        Reservation createdReservation = reservationsService.createReservations(reservation);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdReservation);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Reservations> updateReservations(@PathVariable String id, @RequestBody Reservations reservations) {
+    public ResponseEntity<Reservation> updateReservations(@PathVariable String id, @RequestBody Reservation reservation) {
         return reservationsService.getReservationsById(id)
                 .map(existingReservations -> {
-                    Reservations updatedReservations = reservationsService.updateReservations(id, reservations);
-                    return ResponseEntity.ok(updatedReservations);
+                    Reservation updatedReservation = reservationsService.updateReservations(id, reservation);
+                    return ResponseEntity.ok(updatedReservation);
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Reservations> deleteReservations(@PathVariable String id) {
+    public ResponseEntity<Reservation> deleteReservations(@PathVariable String id) {
         return ResponseEntity.of(reservationsService.getReservationsById(id));
     }
 }

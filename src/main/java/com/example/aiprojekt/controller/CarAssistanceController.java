@@ -1,5 +1,6 @@
 package com.example.aiprojekt.controller;
 
+import com.example.aiprojekt.dto.CarAssistanceDTO;
 import com.example.aiprojekt.models.CarAssistance;
 import com.example.aiprojekt.service.CarAssistanceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/car-assistances")
@@ -20,21 +22,21 @@ public class CarAssistanceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CarAssistance>> getAllCarAssistances() {
-        List<CarAssistance> carAssistances = carAssistanceService.getAllCarServices();
+    public ResponseEntity<List<CarAssistanceDTO>> getAllCarAssistances() {
+        List<CarAssistanceDTO> carAssistances = carAssistanceService.getAllCarServices();
         return ResponseEntity.ok(carAssistances);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CarAssistance> getCarAssistanceById(@PathVariable String id) {
+    public ResponseEntity<CarAssistanceDTO> getCarAssistanceById(@PathVariable String id) {
         return carAssistanceService.getCarServiceById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<CarAssistance> createCarAssistance(@RequestBody CarAssistance carAssistance) {
-        CarAssistance createdCarAssistance = carAssistanceService.createCarService(carAssistance);
+    public ResponseEntity<CarAssistanceDTO> createCarAssistance(@RequestBody CarAssistance carAssistance) {
+        CarAssistanceDTO createdCarAssistance = carAssistanceService.createCarService(carAssistance);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCarAssistance);
     }
 
@@ -49,7 +51,7 @@ public class CarAssistanceController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CarAssistance> deleteCarAssistance(@PathVariable String id) {
+    public ResponseEntity<CarAssistanceDTO> deleteCarAssistance(@PathVariable String id) {
         return ResponseEntity.of(carAssistanceService.getCarServiceById(id));
     }
 }

@@ -1,7 +1,7 @@
 package com.example.aiprojekt.utils;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.example.aiprojekt.Exception.CompanyNotFoundException;
+import com.example.aiprojekt.Exception.ReservationNotFound;
 import com.example.aiprojekt.Exception.EmailBusyException;
 import com.example.aiprojekt.Exception.EmployeeNotFoundException;
 import com.example.aiprojekt.Exception.JobPositionNotFoundException;
@@ -28,8 +28,8 @@ import java.util.Set;
 @ControllerAdvice
 public class ControllerHandler {
 
-    @ExceptionHandler(CompanyNotFoundException.class)
-    public ResponseEntity<ErrorMessageDto> handleCompanyNotFoundException(CompanyNotFoundException exception) {
+    @ExceptionHandler(ReservationNotFound.class)
+    public ResponseEntity<ErrorMessageDto> handleCompanyNotFoundException(ReservationNotFound exception) {
         return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 

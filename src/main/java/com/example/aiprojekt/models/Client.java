@@ -33,8 +33,8 @@ public class Client {
     private String email;
     @NotNull
     private String city;
-    @OneToMany
-    private List<Reservations> reservations;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
     public Client(String name, String lastName, String email, String city) {
         this.name = name;
@@ -47,16 +47,9 @@ public class Client {
     }
 
 
-    public void assignEmployee(Reservations reservations) {
-        this.reservations.add(reservations);
+    public void assignEmployee(Reservation reservation) {
+        this.reservations.add(reservation);
     }
 
-    @Override
-    public String toString() {
-        return "Company{" +
-                "name='" + name + '\'' +
-                ", city='" + city + '\'' +
 
-                '}';
-    }
 }
