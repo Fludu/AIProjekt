@@ -1,6 +1,6 @@
 package com.example.aiprojekt.service;
 
-import com.example.aiprojekt.models.CarService;
+import com.example.aiprojekt.models.CarSAssistance;
 import com.example.aiprojekt.repository.CarServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,29 +9,29 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CarServiceService {
+public class CarAssistanceService {
     private final CarServiceRepository carServiceRepository;
 
     @Autowired
-    public CarServiceService(CarServiceRepository carServiceRepository) {
+    public CarAssistanceService(CarServiceRepository carServiceRepository) {
         this.carServiceRepository = carServiceRepository;
     }
 
-    public List<CarService> getAllCarServices() {
+    public List<CarSAssistance> getAllCarServices() {
         return carServiceRepository.findAll();
     }
 
-    public Optional<CarService> getCarServiceById(String id) {
+    public Optional<CarSAssistance> getCarServiceById(String id) {
         return carServiceRepository.findById(id);
     }
 
-    public CarService createCarService(CarService carService) {
-        return carServiceRepository.save(carService);
+    public CarSAssistance createCarService(CarSAssistance carSAssistance) {
+        return carServiceRepository.save(carSAssistance);
     }
 
-    public CarService updateCarService(String id, CarService carService) {
-        carService.setId(id);
-        return carServiceRepository.save(carService);
+    public CarSAssistance updateCarService(String id, CarSAssistance carSAssistance) {
+        carSAssistance.setId(id);
+        return carServiceRepository.save(carSAssistance);
     }
 
     public void deleteCarService(String id) {

@@ -10,11 +10,11 @@ public record ReservationsDTO(
    String secondName,
    String email,
    double salary,
-   List<CarServiceDTO> carServices
+   List<CarAssistanceServiceDTO> carServices
 ) {
     public static ReservationsDTO of(Reservations reservations) {
-        List<CarServiceDTO> carServiceDTOs = reservations.getCarServices().stream()
-                .map(CarServiceDTO::of)
+        List<CarAssistanceServiceDTO> carAssistanceServiceDTOS = reservations.getCarSAssistances().stream()
+                .map(CarAssistanceServiceDTO::of)
                 .collect(Collectors.toList());
 
         return new ReservationsDTO(
@@ -22,7 +22,7 @@ public record ReservationsDTO(
                 reservations.getSecondName(),
                 reservations.getEmail(),
                 reservations.getSalary(),
-                carServiceDTOs
+                carAssistanceServiceDTOS
         );
     }
 }

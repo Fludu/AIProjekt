@@ -2,7 +2,7 @@ package com.example.aiprojekt;
 
 import com.example.aiprojekt.models.Client;
 import com.example.aiprojekt.models.Reservations;
-import com.example.aiprojekt.models.CarService;
+import com.example.aiprojekt.models.CarSAssistance;
 import com.example.aiprojekt.models.Role;
 import com.example.aiprojekt.models.User;
 import com.example.aiprojekt.repository.RoleRepository;
@@ -17,10 +17,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class Initializer {
-    private final EmployeeRepository employeeRepository;
-    private final CompanyRepository companyRepository;
-    private final JobPositionRepository jobPositionRepository;
-    private final CompanyService companyService;
+   
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -45,20 +42,20 @@ public class Initializer {
     }
 
     public void createJobPosition() {
-        jobPositionRepository.save(new CarService("Kierownik"));
-        jobPositionRepository.save(new CarService("Programista"));
-        jobPositionRepository.save(new CarService("Księgowy"));
-        jobPositionRepository.save(new CarService("Sprzątacz"));
+        jobPositionRepository.save(new CarSAssistance("Kierownik"));
+        jobPositionRepository.save(new CarSAssistance("Programista"));
+        jobPositionRepository.save(new CarSAssistance("Księgowy"));
+        jobPositionRepository.save(new CarSAssistance("Sprzątacz"));
     }
 
     private void createEmployees() {
-        List<CarService> allCarServices = jobPositionRepository.findAll();
+        List<CarSAssistance> allCarSAssistances = jobPositionRepository.findAll();
         List<Client> allCompanies = companyRepository.findAll();
-        Reservations reservations1 = new Reservations("Arek", "Fluda", "arek@wp.pl", 10000, allCarServices.get(0));
+        Reservations reservations1 = new Reservations("Arek", "Fluda", "arek@wp.pl", 10000, allCarSAssistances.get(0));
         employeeRepository.save(reservations1);
-        Reservations save = employeeRepository.save(new Reservations("Kacper", "Roda", "kacper@wp.pl", 10000, allCarServices.get(1)));
-        Reservations save1 = employeeRepository.save(new Reservations("Kamil", "Zyla", "kamil@wp.pl", 10000, allCarServices.get(2)));
-        Reservations save2 = employeeRepository.save(new Reservations("Armin", "Bolen", "armin@wp.pl", 10000, allCarServices.get(3)));
+        Reservations save = employeeRepository.save(new Reservations("Kacper", "Roda", "kacper@wp.pl", 10000, allCarSAssistances.get(1)));
+        Reservations save1 = employeeRepository.save(new Reservations("Kamil", "Zyla", "kamil@wp.pl", 10000, allCarSAssistances.get(2)));
+        Reservations save2 = employeeRepository.save(new Reservations("Armin", "Bolen", "armin@wp.pl", 10000, allCarSAssistances.get(3)));
         companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), reservations1.getEmail());
         companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), save.getEmail());
         companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), save1.getEmail());

@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Builder
-public class CarService {
+public class CarSAssistance {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -33,11 +33,11 @@ public class CarService {
     @JsonIgnore
     private List<Reservations> reservations;
 
-    public CarService() {
+    public CarSAssistance() {
 
     }
 
-    public CarService(String name) {
+    public CarSAssistance(String name) {
         this.name = name;
         this.reservations = new ArrayList<>();
     }

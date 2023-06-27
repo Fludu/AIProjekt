@@ -12,7 +12,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,15 +42,15 @@ public class Reservations {
     @OneToMany
     @JsonIgnore
     @JoinColumn(name = "job_position_id")
-    private List<CarService> carServices;
+    private List<CarSAssistance> carSAssistances;
 
 
-    public Reservations(String name, String secondName, String email, double salary, List<CarService> carServices) {
+    public Reservations(String name, String secondName, String email, double salary, List<CarSAssistance> carSAssistances) {
         this.name = name;
         this.secondName = secondName;
         this.email = email;
         this.salary = salary;
-        this.carServices = carServices;
+        this.carSAssistances = carSAssistances;
     }
 
 
