@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Builder
-public class JobPosition {
+public class CarService {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -29,20 +29,20 @@ public class JobPosition {
 
     private String name;
 
-    @OneToMany(mappedBy = "jobPosition")
+    @OneToMany
     @JsonIgnore
-    private List<Employee> employees;
+    private List<Reservations> reservations;
 
-    public JobPosition() {
+    public CarService() {
 
     }
 
-    public JobPosition(String name) {
+    public CarService(String name) {
         this.name = name;
-        this.employees = new ArrayList<>();
+        this.reservations = new ArrayList<>();
     }
 
-    public void addEmployee(Employee employee) {
-        employees.add(employee);
+    public void addEmployee(Reservations reservations) {
+        this.reservations.add(reservations);
     }
 }

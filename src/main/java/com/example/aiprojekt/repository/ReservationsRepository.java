@@ -1,9 +1,9 @@
 package com.example.aiprojekt.repository;
 
-import com.example.aiprojekt.models.JobPosition;
+import com.example.aiprojekt.models.Reservations;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JobPositionRepository extends JpaRepository<JobPosition, String> {
+public interface ReservationsRepository extends JpaRepository<Reservations, String> {
 }

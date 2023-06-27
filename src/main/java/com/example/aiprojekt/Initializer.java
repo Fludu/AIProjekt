@@ -1,16 +1,12 @@
 package com.example.aiprojekt;
 
-import com.example.aiprojekt.models.Company;
-import com.example.aiprojekt.models.Employee;
-import com.example.aiprojekt.models.JobPosition;
+import com.example.aiprojekt.models.Client;
+import com.example.aiprojekt.models.Reservations;
+import com.example.aiprojekt.models.CarService;
 import com.example.aiprojekt.models.Role;
 import com.example.aiprojekt.models.User;
-import com.example.aiprojekt.repository.CompanyRepository;
-import com.example.aiprojekt.repository.EmployeeRepository;
-import com.example.aiprojekt.repository.JobPositionRepository;
 import com.example.aiprojekt.repository.RoleRepository;
 import com.example.aiprojekt.repository.UserRepository;
-import com.example.aiprojekt.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -33,7 +29,6 @@ public class Initializer {
     public void postConstruct() {
         createRole();
         createUser();
-        createJobPosition();
         createCompanies();
         createEmployees();
 
@@ -50,21 +45,21 @@ public class Initializer {
     }
 
     public void createJobPosition() {
-        jobPositionRepository.save(new JobPosition("Kierownik"));
-        jobPositionRepository.save(new JobPosition("Programista"));
-        jobPositionRepository.save(new JobPosition("Księgowy"));
-        jobPositionRepository.save(new JobPosition("Sprzątacz"));
+        jobPositionRepository.save(new CarService("Kierownik"));
+        jobPositionRepository.save(new CarService("Programista"));
+        jobPositionRepository.save(new CarService("Księgowy"));
+        jobPositionRepository.save(new CarService("Sprzątacz"));
     }
 
     private void createEmployees() {
-        List<JobPosition> allJobPositions = jobPositionRepository.findAll();
-        List<Company> allCompanies = companyRepository.findAll();
-        Employee employee1 = new Employee("Arek", "Fluda", "arek@wp.pl", 10000, allJobPositions.get(0));
-        employeeRepository.save(employee1);
-        Employee save = employeeRepository.save(new Employee("Kacper", "Roda", "kacper@wp.pl", 10000, allJobPositions.get(1)));
-        Employee save1 = employeeRepository.save(new Employee("Kamil", "Zyla", "kamil@wp.pl", 10000, allJobPositions.get(2)));
-        Employee save2 = employeeRepository.save(new Employee("Armin", "Bolen", "armin@wp.pl", 10000, allJobPositions.get(3)));
-        companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), employee1.getEmail());
+        List<CarService> allCarServices = jobPositionRepository.findAll();
+        List<Client> allCompanies = companyRepository.findAll();
+        Reservations reservations1 = new Reservations("Arek", "Fluda", "arek@wp.pl", 10000, allCarServices.get(0));
+        employeeRepository.save(reservations1);
+        Reservations save = employeeRepository.save(new Reservations("Kacper", "Roda", "kacper@wp.pl", 10000, allCarServices.get(1)));
+        Reservations save1 = employeeRepository.save(new Reservations("Kamil", "Zyla", "kamil@wp.pl", 10000, allCarServices.get(2)));
+        Reservations save2 = employeeRepository.save(new Reservations("Armin", "Bolen", "armin@wp.pl", 10000, allCarServices.get(3)));
+        companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), reservations1.getEmail());
         companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), save.getEmail());
         companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), save1.getEmail());
         companyService.assignEmployeeToCompany(allCompanies.get(0).getId(), save2.getEmail());
@@ -72,9 +67,8 @@ public class Initializer {
     }
 
     private void createCompanies() {
-        companyRepository.save(new Company("Asseco", "Rzeszów", "IT"));
-        companyRepository.save(new Company("Comarch.SA", "Krakow", "IT"));
-        companyRepository.save(new Company("Lufthansa", "Gdansk", "Transport"));
-        companyRepository.save(new Company("PKO BP", "Warszaw", "Finance"));
+        companyRepository.save(new Client("Arkadiusz", "Fluda", "arekflu@gmail.com","Rzeszów"));
+        companyRepository.save(new Client("Kamil", "Zyla", "kamil.zyla@gmail.com","Warszawa"));
+        companyRepository.save(new Client("Kacper", "Roda", "kacper.roda@gmail.com","Krakow"));
     }
 }
