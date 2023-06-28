@@ -81,18 +81,32 @@ public class ReservationsService {
     }
 
     public ReservationInfoDTO updateReservations(String id, ReservationRequest reservationRequest) {
-        Client clientById = clientRepository.findById(id).orElse(null);
+        Reservation reservation = reservationsRepository.findById(id)
+                .orElseThrow(() -> new ReservationNotFound(id));
 
-        if (reservationsRepository.existsByDateAndClient(reservationRequest.getDate(), clientById)) {
-            throw new ReservationExsitsException(reservationRequest.getDate(), (clientById.getClient_id()));
+        if (reservationRequest.getDate().before(new Date(System.currentTimeMillis()))) {
+            throw new DateFromPastException(reservationRequest.getDate());
         }
-        Reservation reservation = reservationsRepository.findByDateAndClient(reservationRequest.getDate(), clientById);
-        if (reservation != null) {
-            reservation.setDate(reservationRequest.getDate());
-            reservation.setClient(clientById);
-            reservationsRepository.save(reservation);
+
+        Client client = clientRepository.findById(reservationRequest.getClientId())
+                .orElseThrow(() -> new ClientByIdNotFoundException(reservationRequest.getClientId()));
+
+        List<CarAssistance> carAssistances = new ArrayList<>();
+        if (reservationRequest.getCarAssistanceId() != null) {
+            for (String carAssistanceId : reservationRequest.getCarAssistanceId()) {
+                CarAssistance carAssistance = carAssistanceRepository.findById(carAssistanceId)
+                        .orElseThrow(() -> new CarAssistanceNotFoundException(carAssistanceId));
+                carAssistances.add(carAssistance);
+            }
         }
-        return ReservationInfoDTO.of(reservation);
+
+        reservation.setDate(reservationRequest.getDate());
+        reservation.setClient(client);
+        reservation.setCarAssistances(carAssistances);
+
+        Reservation updatedReservation = reservationsRepository.save(reservation);
+
+        return ReservationInfoDTO.of(updatedReservation);
     }
 
     public void deleteReservations(String id) {
