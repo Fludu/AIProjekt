@@ -18,11 +18,15 @@ import java.util.Optional;
 @Service
 public class ReservationsService {
     private final ReservationsRepository reservationsRepository;
+    private final EmailAddAppointmentToUserService emailAddAppointmentToUserService;
+    private final EmailCancelAppointmentService emailCancelAppointmentService;
     private final ClientRepository clientRepository;
 
     @Autowired
-    public ReservationsService(ReservationsRepository reservationsRepository, ClientRepository clientRepository) {
+    public ReservationsService(ReservationsRepository reservationsRepository, EmailAddAppointmentToUserService emailAddAppointmentToUserService, EmailCancelAppointmentService emailCancelAppointmentService, ClientRepository clientRepository) {
         this.reservationsRepository = reservationsRepository;
+        this.emailAddAppointmentToUserService = emailAddAppointmentToUserService;
+        this.emailCancelAppointmentService = emailCancelAppointmentService;
         this.clientRepository = clientRepository;
     }
 
@@ -35,8 +39,10 @@ public class ReservationsService {
     }
 
     public Reservation saveReservation(ReservationRequest reservation) {
-        Client client = clientRepository.findById(reservation.getC().getEmail()).orElseThrow(()-> new ClientNotFoundException(reservation.getClient().getEmail()));
-        Reservation reservation1 = reservationsRepository.save(ReservationRequest.of())
+        Client client = clientRepository.findById(reservation.getC().getEmail()).orElseThrow(() -> new ClientNotFoundException(reservation.getClient().getEmail()));
+        Reservation reservation1 = reservationsRepository.save(null);
+        EmailAddAppointmentToUserService.EmailAddAppointmentRequest emailAddAppointmentRequest = EmailAddAppointmentToUserService.EmailAddAppointmentRequest.of(reservation1, client, null); //TODO: ADD CAR ASSISTANCE AFTER END FUNCIONALITY
+        emailAddAppointmentToUserService.sendConfirmationEmail(emailAddAppointmentRequest);
         return reservationsRepository.save(reservation);
     }
 
@@ -58,5 +64,7 @@ public class ReservationsService {
             }
         }
         reservationsRepository.deleteById(reservationByEmail.getId());
+        EmailCancelAppointmentService.EmailCancelAppointmentRequest emailCancelAppointmentRequest = new EmailCancelAppointmentService.EmailCancelAppointmentRequest(Reservation.builder().build(), Client.builder().build(), CarAssistance.builder().build());
+        emailCancelAppointmentService.sendConfirmationEmail(emailCancelAppointmentRequest);
     }
 }

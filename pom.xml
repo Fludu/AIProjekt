@@ -19,6 +19,12 @@
         <spring-security-test.version>5.7.2</spring-security-test.version>
         <java-jwt.version>4.0.0</java-jwt.version>
         <spring-boot-configuration-processor.version>2.7.2</spring-boot-configuration-processor.version>
+        <spring-boot-starter-thymeleaf.version>2.7.3</spring-boot-starter-thymeleaf.version>
+        <spring-boot-starter-mail.version>2.7.2</spring-boot-starter-mail.version>
+        <spring-context-support.version>5.3.22</spring-context-support.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <apache-commons>3.12.0</apache-commons>
+
     </properties>
     <dependencies>
         <dependency>
@@ -70,6 +76,31 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>${spring-boot-starter-mail.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring-context-support.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>${spring-boot-starter-thymeleaf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache-commons}</version>
         </dependency>
     </dependencies>
 

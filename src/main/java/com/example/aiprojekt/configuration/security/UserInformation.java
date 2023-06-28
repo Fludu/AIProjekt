@@ -1,4 +1,4 @@
-package com.example.aiprojekt.security;
+package com.example.aiprojekt.configuration.security;
 
 import com.example.aiprojekt.models.Role;
 import com.example.aiprojekt.models.User;

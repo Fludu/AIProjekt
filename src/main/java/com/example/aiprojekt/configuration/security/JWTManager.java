@@ -1,4 +1,4 @@
-package com.example.aiprojekt.security;
+package com.example.aiprojekt.configuration.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
