@@ -1,5 +1,6 @@
 package com.example.aiprojekt.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -33,7 +34,8 @@ public class Client {
     private String email;
     @NotNull
     private String city;
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Reservation> reservations;
 
     public Client(String name, String lastName, String email, String city) {
@@ -47,7 +49,7 @@ public class Client {
     }
 
 
-    public void assignEmployee(Reservation reservation) {
+    public void addReservation(Reservation reservation) {
         this.reservations.add(reservation);
     }
 

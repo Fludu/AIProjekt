@@ -2,11 +2,11 @@ package com.example.aiprojekt.dto;
 
 import com.example.aiprojekt.models.CarAssistance;
 
-public record CarAssistanceDTO(
+public record CarAssistanceInfoDTO(
         String name,
         double price) {
-    public static CarAssistanceDTO of(CarAssistance carAssistance) {
-        return new CarAssistanceDTO(
+    public static CarAssistanceInfoDTO of(CarAssistance carAssistance) {
+        return new CarAssistanceInfoDTO(
                 carAssistance.getName(),
                 carAssistance.getPrice()
         );

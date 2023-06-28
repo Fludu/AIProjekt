@@ -1,5 +1,6 @@
 package com.example.aiprojekt;
 
+import com.example.aiprojekt.models.CarAssistance;
 import com.example.aiprojekt.models.Client;
 import com.example.aiprojekt.models.Role;
 import com.example.aiprojekt.models.User;
@@ -9,12 +10,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
 public class Initializer {
     private final ClientRepository clientRepository;
-
+    private final CarAssistanceRepository carAssistanceRepository;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -23,6 +25,7 @@ public class Initializer {
     public void postConstruct() {
         createRole();
         createUser();
+        createCarAssistance();
         createEmployees();
 
     }
@@ -46,6 +49,18 @@ public class Initializer {
         clientRepository.save(reservations2);
         clientRepository.save(reservations3);
 
+    }
+
+    private void createCarAssistance() {
+        CarAssistance reservations1 = new CarAssistance("12","Wymiana opon", 200, new ArrayList<>());
+        carAssistanceRepository.save(reservations1);
+        CarAssistance reservations2 = new CarAssistance("Naprawa hamulcow", 400);
+        CarAssistance reservations3 = new CarAssistance("Naprawa silnika", 800);
+        CarAssistance reservations4 = new CarAssistance("Przeglad samochodu", 1200);
+
+        carAssistanceRepository.save(reservations2);
+        carAssistanceRepository.save(reservations3);
+        carAssistanceRepository.save(reservations4);
     }
 
 

@@ -1,5 +1,7 @@
 package com.example.aiprojekt.controller;
 
+import com.example.aiprojekt.dto.ReservationInfoDTO;
+import com.example.aiprojekt.dto.ReservationRequest;
 import com.example.aiprojekt.models.Reservation;
 import com.example.aiprojekt.service.ReservationsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,36 +22,33 @@ public class ReservationsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Reservation>> getAllReservations() {
-        List<Reservation> reservations = reservationsService.getAllReservations();
+    public ResponseEntity<List<ReservationInfoDTO>> getAllReservations() {
+        List<ReservationInfoDTO> reservations = reservationsService.getAllReservations();
         return ResponseEntity.ok(reservations);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Reservation> getReservationsById(@PathVariable String id) {
-        return reservationsService.getReservationsById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ReservationInfoDTO> getReservationsById(@PathVariable String id) {
+        ReservationInfoDTO reservationInfoDTO = reservationsService.getReservationsById(id);
+        return ResponseEntity.ok(reservationInfoDTO);
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservations(@RequestBody Reservation reservation) {
-        Reservation createdReservation = reservationsService.saveReservation(reservation);
+    public ResponseEntity<ReservationInfoDTO> createReservations(@RequestBody ReservationRequest reservation) {
+        ReservationInfoDTO createdReservation = reservationsService.saveReservation(reservation);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReservation);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Reservation> updateReservations(@PathVariable String id, @RequestBody Reservation reservation) {
-        return reservationsService.getReservationsById(id)
-                .map(existingReservations -> {
-                    Reservation updatedReservation = reservationsService.updateReservations(id, reservation);
-                    return ResponseEntity.ok(updatedReservation);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ReservationInfoDTO> updateReservations(@PathVariable String id, @RequestBody ReservationRequest reservation) {
+        ReservationInfoDTO reservationsById = reservationsService.updateReservations(id, reservation);
+        return ResponseEntity.ok(reservationsById);
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Reservation> deleteReservations(@PathVariable String id) {
-        return ResponseEntity.of(reservationsService.getReservationsById(id));
+    public ResponseEntity<ReservationInfoDTO> deleteReservations(@PathVariable String id) {
+        reservationsService.deleteReservations(id);
+        return ResponseEntity.noContent().build();
     }
 }

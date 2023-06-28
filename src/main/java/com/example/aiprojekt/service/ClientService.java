@@ -1,20 +1,18 @@
 package com.example.aiprojekt.service;
 
-import com.example.aiprojekt.Exception.ClientNotFoundException;
+import com.example.aiprojekt.Exception.ClientByIdNotFoundException;
 import com.example.aiprojekt.Exception.NameIsBussyException;
-import com.example.aiprojekt.Exception.ReservationNotFound;
 import com.example.aiprojekt.dto.ClientDTO;
 import com.example.aiprojekt.dto.ClientRequest;
 import com.example.aiprojekt.models.Client;
-import com.example.aiprojekt.models.Reservation;
 import com.example.aiprojekt.repository.ClientRepository;
 import com.example.aiprojekt.repository.ReservationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -28,11 +26,20 @@ public class ClientService {
     }
 
     public List<ClientDTO> getAllClients() {
-        return clientRepository.findAll().stream().map(ClientDTO::of).collect(Collectors.toList());
+        List<Client> clients = clientRepository.findAll();
+        List<ClientDTO> clientDTOs = new ArrayList<>();
+
+        for (Client client : clients) {
+            ClientDTO clientDTO = ClientDTO.of(client);
+            clientDTOs.add(clientDTO);
+        }
+
+        return clientDTOs;
     }
 
-    public Optional<Client> getClientById(String id) {
-        return clientRepository.findById(id);
+    public Optional<ClientDTO> getClientById(String id) {
+        return clientRepository.findById(id)
+                .map(ClientDTO::of);
     }
 
     public ClientDTO createClient(ClientRequest client) throws NameIsBussyException {
@@ -45,20 +52,11 @@ public class ClientService {
         return ClientDTO.of(clientRepository.save(newClient));
     }
 
-    public ClientDTO assignReservationToClient(String reservationId, String clientEmail) throws NameIsBussyException {
-        Client client = clientRepository.findByEmail(clientEmail).orElseThrow(() -> new ClientNotFoundException(clientEmail));
-        Reservation reservation = reservationsRepository.findById(reservationId).orElseThrow(() -> new ReservationNotFound(reservationId));
-        if (clientRepository.existsByName(client.getName())) {
-            throw new NameIsBussyException(client.getName());
-        }
-        client.getReservations().add(reservation);
-
-
-        return ClientDTO.of(clientRepository.save(client));
-    }
-
-    public Client updateClient(String id, Client client) {
-        client.setClient_id(id);
+    public Client updateClient(String id, ClientRequest clientRequest) {
+        Client client = clientRepository.findById(id).orElseThrow(() -> new ClientByIdNotFoundException(id));
+        client.setName(clientRequest.getName());
+        client.setCity(clientRequest.getCity());
+        client.setLastName(clientRequest.getLastName());
         return clientRepository.save(client);
     }
 

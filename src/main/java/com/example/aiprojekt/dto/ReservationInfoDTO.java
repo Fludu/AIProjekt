@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -14,20 +15,20 @@ import java.util.List;
 @EqualsAndHashCode
 @AllArgsConstructor
 @Builder
-public class ReservationDTO {
-    private LocalDateTime localDateTime;
+public class ReservationInfoDTO {
+    private Date localDateTime;
     private Client client;
-    private List<CarAssistanceDTO> carAssistances;
+    private List<String> carAssistances;
 
-    public static ReservationDTO of(Reservation reservation) {
-        List<CarAssistanceDTO> carAssistancesDTO = new ArrayList<>();
+    public static ReservationInfoDTO of(Reservation reservation) {
+        List<String> carAssistancesDTO = new ArrayList<>();
         if(reservation.getCarAssistances()!=null) {
             for (CarAssistance carAssistance : reservation.getCarAssistances()) {
-                carAssistancesDTO.add(CarAssistanceDTO.of(carAssistance));
+                carAssistancesDTO.add(carAssistance.getName());
             }
         }
-        return new ReservationDTO(
-                reservation.getLocalDateTime(),
+        return new ReservationInfoDTO(
+                reservation.getDate(),
                 reservation.getClient(),
                 carAssistancesDTO
         );

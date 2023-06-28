@@ -1,12 +1,7 @@
 package com.example.aiprojekt.utils;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.example.aiprojekt.Exception.ReservationNotFound;
-import com.example.aiprojekt.Exception.EmailBusyException;
-import com.example.aiprojekt.Exception.EmployeeNotFoundException;
-import com.example.aiprojekt.Exception.JobPositionNotFoundException;
-import com.example.aiprojekt.Exception.SalaryMustBePositive;
-import com.example.aiprojekt.Exception.UnauthorizedProcessException;
+import com.example.aiprojekt.Exception.*;
 import com.example.aiprojekt.dto.ErrorMessageDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,23 +28,23 @@ public class ControllerHandler {
         return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<ErrorMessageDto> handleEmployeeNotFoundException(EmployeeNotFoundException exception) {
-        return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(JobPositionNotFoundException.class)
-    public ResponseEntity<ErrorMessageDto> handleRoleNotFoundException(JobPositionNotFoundException exception) {
-        return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(SalaryMustBePositive.class)
-    public ResponseEntity<ErrorMessageDto> handleSalaryMustBePositiveException(SalaryMustBePositive exception) {
+    @ExceptionHandler(EmailBusyException.class)
+    public ResponseEntity<ErrorMessageDto> handleEmailBusyException(EmailBusyException exception) {
         return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(EmailBusyException.class)
-    public ResponseEntity<ErrorMessageDto> handleEmailBusyException(EmailBusyException exception) {
+    @ExceptionHandler(CarAssistanceExistsException.class)
+    public ResponseEntity<ErrorMessageDto> handleEmailBusyException(CarAssistanceExistsException exception) {
+        return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CarAssistanceNotFoundException.class)
+    public ResponseEntity<ErrorMessageDto> handleEmailBusyException(CarAssistanceNotFoundException exception) {
+        return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ClientByIdNotFoundException.class)
+    public ResponseEntity<ErrorMessageDto> handleEmailBusyException(ClientByIdNotFoundException exception) {
         return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 

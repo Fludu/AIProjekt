@@ -1,7 +1,6 @@
 package com.example.aiprojekt.models;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -10,8 +9,8 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -33,9 +32,9 @@ public class Reservation {
     }
 
 
-    private LocalDateTime localDateTime;
+    private Date date;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "client_id")
     private Client client;
 
@@ -46,14 +45,20 @@ public class Reservation {
     private List<CarAssistance> carAssistances;
 
 
-    public Reservation(LocalDateTime localDateTime, List<CarAssistance> carAssistances) {
-        this.localDateTime = localDateTime;
+    public Reservation(Date date, List<CarAssistance> carAssistances) {
+        this.date = date;
         this.carAssistances = carAssistances;
     }
 
-    public Reservation(LocalDateTime localDateTime, Client client) {
-        this.localDateTime = localDateTime;
+    public Reservation(Date date, Client client) {
+        this.date = date;
         this.client = client;
         this.carAssistances = new ArrayList<>();
+    }
+
+    public Reservation(Date date, Client client, List<CarAssistance> carAssistances) {
+        this.date = date;
+        this.client = client;
+        this.carAssistances = carAssistances;
     }
 }

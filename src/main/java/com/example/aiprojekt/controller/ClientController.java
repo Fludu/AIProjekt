@@ -28,26 +28,20 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Client> getClientById(@PathVariable String id) {
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable String id) {
         return clientService.getClientById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<ClientDTO> assignResevationToClient(@RequestBody ClientRequest client) throws NameIsBussyException {
+    public ResponseEntity<ClientDTO> addClient(@RequestBody ClientRequest client) throws NameIsBussyException {
         ClientDTO createdClient = clientService.createClient(client);
         return ResponseEntity.ok(createdClient);
     }
 
-    @PostMapping("/{email}/reservation/{id}")
-    public ResponseEntity<ClientDTO> assignResevationToClient(@PathVariable String email, @PathVariable  String reservationId) throws NameIsBussyException {
-        ClientDTO createdClient = clientService.assignReservationToClient(reservationId, email);
-        return ResponseEntity.ok(createdClient);
-    }
-
     @PutMapping("/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable String id, @RequestBody Client client) {
+    public ResponseEntity<Client> updateClient(@PathVariable String id, @RequestBody ClientRequest client) {
         return clientService.getClientById(id)
                 .map(existingClient -> {
                     Client updatedClient = clientService.updateClient(id, client);
@@ -58,7 +52,8 @@ public class ClientController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Client> deleteClient(@PathVariable String id) {
-        return ResponseEntity.of(clientService.getClientById(id));
+        clientService.deleteClient(id);
+        return ResponseEntity.ok().build();
 
     }
 }
