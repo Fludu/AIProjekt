@@ -1,4 +1,4 @@
-package com.example.aiprojekt.security;
+package com.example.aiprojekt.configuration.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.fasterxml.jackson.databind.ObjectMapper;

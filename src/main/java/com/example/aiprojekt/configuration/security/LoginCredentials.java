@@ -1,4 +1,4 @@
-package com.example.aiprojekt.security;
+package com.example.aiprojekt.configuration.security;
 
 record LoginCredentials(
         String username,
