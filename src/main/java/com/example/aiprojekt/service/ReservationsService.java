@@ -1,20 +1,29 @@
 package com.example.aiprojekt.service;
 
+import com.example.aiprojekt.Exception.ClientNotFoundException;
+import com.example.aiprojekt.Exception.ReservationNotFound;
+import com.example.aiprojekt.dto.ReservationRequest;
+import com.example.aiprojekt.models.CarAssistance;
+import com.example.aiprojekt.models.Client;
 import com.example.aiprojekt.models.Reservation;
+import com.example.aiprojekt.repository.ClientRepository;
 import com.example.aiprojekt.repository.ReservationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ReservationsService {
     private final ReservationsRepository reservationsRepository;
+    private final ClientRepository clientRepository;
 
     @Autowired
-    public ReservationsService(ReservationsRepository reservationsRepository) {
+    public ReservationsService(ReservationsRepository reservationsRepository, ClientRepository clientRepository) {
         this.reservationsRepository = reservationsRepository;
+        this.clientRepository = clientRepository;
     }
 
     public List<Reservation> getAllReservations() {
@@ -25,16 +34,29 @@ public class ReservationsService {
         return reservationsRepository.findById(id);
     }
 
-    public Reservation createReservations(Reservation reservation) {
+    public Reservation saveReservation(ReservationRequest reservation) {
+        Client client = clientRepository.findById(reservation.getC().getEmail()).orElseThrow(()-> new ClientNotFoundException(reservation.getClient().getEmail()));
+        Reservation reservation1 = reservationsRepository.save(ReservationRequest.of())
         return reservationsRepository.save(reservation);
     }
 
     public Reservation updateReservations(String id, Reservation reservation) {
         reservation.setId(id);
+        Optional<Reservation> reservationById = reservationsRepository.findById(id);
+
         return reservationsRepository.save(reservation);
     }
 
     public void deleteReservations(String id) {
-        reservationsRepository.deleteById(id);
+        Reservation reservationByEmail = reservationsRepository.findById(id).orElseThrow(() -> new ReservationNotFound(id));
+        if (reservationByEmail != null) {
+            if (reservationByEmail.getCarAssistances() != null) {
+                reservationByEmail.getCarAssistances().forEach(carAssistance -> {
+                    reservationByEmail.setCarAssistances(new ArrayList<>());
+                    carAssistance.setReservations(new ArrayList<>());
+                });
+            }
+        }
+        reservationsRepository.deleteById(reservationByEmail.getId());
     }
 }

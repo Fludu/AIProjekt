@@ -11,6 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,6 +25,7 @@ public class Reservation {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "reservationId")
     private String id;
 
     public Reservation() {
@@ -37,8 +39,10 @@ public class Reservation {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @OneToMany
-    @JsonIgnore
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "reservation_car_assistance",
+            joinColumns = @JoinColumn(name = "reservation_id"),
+            inverseJoinColumns = @JoinColumn(name = "car_assistance_id"))
     private List<CarAssistance> carAssistances;
 
 
@@ -47,5 +51,9 @@ public class Reservation {
         this.carAssistances = carAssistances;
     }
 
-
+    public Reservation(LocalDateTime localDateTime, Client client) {
+        this.localDateTime = localDateTime;
+        this.client = client;
+        this.carAssistances = new ArrayList<>();
+    }
 }

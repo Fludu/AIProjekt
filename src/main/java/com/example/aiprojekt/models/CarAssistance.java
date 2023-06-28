@@ -27,18 +27,18 @@ public class CarAssistance {
     private String name;
 
     private double price;
-    @ManyToOne
+    @ManyToMany(mappedBy = "carAssistances")
     @JsonIgnore
-    private Reservation reservation;
+    private List<Reservation> reservations = new ArrayList<>();
 
     public CarAssistance() {
 
     }
 
-    public CarAssistance(String name, double price, Reservation reservation) {
+    public CarAssistance(String name, double price) {
         this.name = name;
         this.price = price;
-        this.reservation = reservation;
+
     }
 
 
