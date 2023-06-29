@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.Scanner;
 
 @Service
@@ -50,15 +51,15 @@ public class EmailAddAppointmentToUserService {
 
     private String loadTextMessage(EmailAddAppointmentRequest emailAddAppointmentRequest) {
         return getMessageFromFile(emailAddAppointmentRequest.client().getName(),
-                emailAddAppointmentRequest.carAssistance().getName(), emailAddAppointmentRequest.appointment().getLocalDateTime().toLocalDate(),
-                emailAddAppointmentRequest.appointment().getLocalDateTime().toLocalTime(), emailAddAppointmentRequest.carAssistance().getPrice());
+                emailAddAppointmentRequest.carAssistance().getName(), emailAddAppointmentRequest.appointment().getDate(),
+                emailAddAppointmentRequest.appointment().getDate(), emailAddAppointmentRequest.carAssistance().getPrice());
     }
 
     private String getMessageFromFile(
             String userName,
             String mechanicalService,
-            LocalDate appointmentDate,
-            LocalTime appointmentTime,
+            Date appointmentDate,
+            Date appointmentTime,
             Double price) {
         StringBuilder stringBuilder = new StringBuilder();
         try (Scanner scanner = new Scanner(getFile())) {

@@ -108,7 +108,7 @@ public class ReservationsService {
 
         return ReservationInfoDTO.of(updatedReservation);
     }
-
+//TODO
     public void deleteReservations(String id) {
         Reservation reservationByEmail = reservationsRepository.findById(id).orElseThrow(() -> new ReservationNotFound(id));
         if (reservationByEmail != null) {

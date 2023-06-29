@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.Scanner;
 
 @Service
@@ -47,15 +48,15 @@ public class EmailCancelAppointmentService {
     }
 
     private String loadTextMessage(EmailCancelAppointmentRequest emailCancelAppointmentRequest) {
-        return getMessageFromFile(emailCancelAppointmentRequest.user().getName(), emailCancelAppointmentRequest.mechanicalService().getName(), emailCancelAppointmentRequest.appointment().getLocalDateTime().toLocalDate(), emailCancelAppointmentRequest.appointment().getLocalDateTime().toLocalTime());
+        return getMessageFromFile(emailCancelAppointmentRequest.user().getName(), emailCancelAppointmentRequest.mechanicalService().getName(), emailCancelAppointmentRequest.appointment().getDate(), emailCancelAppointmentRequest.appointment().getDate());
     }
 
 
     private String getMessageFromFile(
             String userName,
             String mechanicalService,
-            LocalDate appointmentDate,
-            LocalTime appointmentTime) {
+            Date appointmentDate,
+            Date appointmentTime) {
         StringBuilder stringBuilder = new StringBuilder();
         try (Scanner scanner = new Scanner(getFile())) {
             while (scanner.hasNextLine()) {
