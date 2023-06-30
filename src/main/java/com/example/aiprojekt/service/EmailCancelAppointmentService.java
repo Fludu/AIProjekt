@@ -1,6 +1,6 @@
 package com.example.aiprojekt.service;
 
-import com.example.aiprojekt.Exception.FileNoExistException;
+import com.example.aiprojekt.exception.FileNoExistException;
 import com.example.aiprojekt.models.CarAssistance;
 import com.example.aiprojekt.models.Client;
 import com.example.aiprojekt.models.Reservation;
@@ -18,8 +18,8 @@ import javax.mail.util.ByteArrayDataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 @Service
@@ -44,19 +44,22 @@ public class EmailCancelAppointmentService {
     }
 
     private ByteArrayDataSource loadImage() throws IOException {
-        return new ByteArrayDataSource(fileStorage.getFileBytes("AIProjekt/src/main/resources/files/email/email-cancelled.png"), fileStorage.getFileType("AIProjekt/src/main/resources/files/email/email-cancelled.png"));
+        return new ByteArrayDataSource(fileStorage.getFileBytes("src/main/resources/files/email/email-cancelled.png"), fileStorage.getFileType("AIProjekt/src/main/resources/files/email/email-cancelled.png"));
     }
 
     private String loadTextMessage(EmailCancelAppointmentRequest emailCancelAppointmentRequest) {
-        return getMessageFromFile(emailCancelAppointmentRequest.user().getName(), emailCancelAppointmentRequest.mechanicalService().getName(), emailCancelAppointmentRequest.appointment().getDate(), emailCancelAppointmentRequest.appointment().getDate());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedDateTime = emailCancelAppointmentRequest.appointment().getDate().format(formatter);
+
+        return getMessageFromFile(emailCancelAppointmentRequest.user().getName(), emailCancelAppointmentRequest.carAssistantsName, emailCancelAppointmentRequest.appointment().getDate().toLocalDate(), formattedDateTime);
     }
 
 
     private String getMessageFromFile(
             String userName,
-            String mechanicalService,
-            Date appointmentDate,
-            Date appointmentTime) {
+            List<String> mechanicalService,
+            LocalDate appointmentDate,
+            String appointmentTime) {
         StringBuilder stringBuilder = new StringBuilder();
         try (Scanner scanner = new Scanner(getFile())) {
             while (scanner.hasNextLine()) {
@@ -79,13 +82,13 @@ public class EmailCancelAppointmentService {
 
     record EmailCancelAppointmentRequest(Reservation appointment,
                                          Client user,
-                                         CarAssistance mechanicalService) {
+                                         List<String> carAssistantsName) {
 
-        static EmailCancelAppointmentRequest of(Reservation appointment, Client user, CarAssistance mechanicalService) {
+        static EmailCancelAppointmentRequest of(Reservation appointment, Client user, List<String> carAssistantsName) {
             return new EmailCancelAppointmentRequest(
                     appointment,
                     user,
-                    mechanicalService
+                    carAssistantsName
             );
         }
     }

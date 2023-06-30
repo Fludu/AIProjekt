@@ -4,12 +4,13 @@ import com.example.aiprojekt.models.CarAssistance;
 import com.example.aiprojekt.models.Reservation;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public record ReservationsDTO(
-        Date localDateTime,
+        String date,
         List<CarAssistanceInfoDTO> carAssistances
 ) {
     public static ReservationsDTO of(Reservation reservation) {
@@ -20,6 +21,8 @@ public record ReservationsDTO(
                 carAssistanceInfoDTOS.add(carAssistanceInfoDTO);
             }
         }
-        return new ReservationsDTO(reservation.getDate(), carAssistanceInfoDTOS);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = reservation.getDate().format(formatter);
+        return new ReservationsDTO(formattedDateTime, carAssistanceInfoDTOS);
     }
 }

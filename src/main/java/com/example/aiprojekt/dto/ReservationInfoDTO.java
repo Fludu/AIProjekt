@@ -5,7 +5,9 @@ import com.example.aiprojekt.models.Client;
 import com.example.aiprojekt.models.Reservation;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ReservationInfoDTO {
-    private Date localDateTime;
+    private String date;
     private Client client;
     private List<String> carAssistances;
 
@@ -27,8 +29,10 @@ public class ReservationInfoDTO {
                 carAssistancesDTO.add(carAssistance.getName());
             }
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = reservation.getDate().format(formatter);
         return new ReservationInfoDTO(
-                reservation.getDate(),
+                formattedDateTime,
                 reservation.getClient(),
                 carAssistancesDTO
         );

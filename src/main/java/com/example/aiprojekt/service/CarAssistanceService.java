@@ -1,7 +1,7 @@
 package com.example.aiprojekt.service;
 
-import com.example.aiprojekt.Exception.CarAssistanceExistsException;
-import com.example.aiprojekt.Exception.CarAssistanceNotFoundException;
+import com.example.aiprojekt.exception.CarAssistanceExistsException;
+import com.example.aiprojekt.exception.CarAssistanceNotFoundException;
 import com.example.aiprojekt.dto.CarAssistanceInfoDTO;
 import com.example.aiprojekt.dto.CarAssistanceRequest;
 import com.example.aiprojekt.models.CarAssistance;

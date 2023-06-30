@@ -1,8 +1,11 @@
 spring:
   datasource:
     username: postgres
-    url: jdbc:postgresql://localhost:5432/Firmy
+    url: jdbc:postgresql://localhost:5433/Firmy
     password: '12345'
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -31,3 +34,8 @@ mail:
   cancel-appointment:
     subject: 'Zgłoszenie w CarClinic zostało anulowane!'
     pathToMessage: '/content/mail/cancelAppointment.html'
+
+rest:
+  connection:
+    connectionRequestTimeout: 5s
+    readTimeout: 10s

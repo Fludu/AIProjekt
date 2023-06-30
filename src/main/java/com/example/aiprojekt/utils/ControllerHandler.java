@@ -1,7 +1,7 @@
 package com.example.aiprojekt.utils;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.example.aiprojekt.Exception.*;
+import com.example.aiprojekt.exception.*;
 import com.example.aiprojekt.dto.ErrorMessageDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +35,11 @@ public class ControllerHandler {
 
     @ExceptionHandler(CarAssistanceExistsException.class)
     public ResponseEntity<ErrorMessageDto> handleEmailBusyException(CarAssistanceExistsException exception) {
+        return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DateFromPastException.class)
+    public ResponseEntity<ErrorMessageDto> handleDateFromPastException(DateFromPastException exception) {
         return new ResponseEntity<>(new ErrorMessageDto(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 

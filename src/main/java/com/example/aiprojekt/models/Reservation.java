@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +34,7 @@ public class Reservation {
     }
 
 
-    private Date date;
+    private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "client_id")
@@ -45,18 +47,18 @@ public class Reservation {
     private List<CarAssistance> carAssistances;
 
 
-    public Reservation(Date date, List<CarAssistance> carAssistances) {
+    public Reservation(LocalDateTime date, List<CarAssistance> carAssistances) {
         this.date = date;
         this.carAssistances = carAssistances;
     }
 
-    public Reservation(Date date, Client client) {
+    public Reservation(LocalDateTime date, Client client) {
         this.date = date;
         this.client = client;
         this.carAssistances = new ArrayList<>();
     }
 
-    public Reservation(Date date, Client client, List<CarAssistance> carAssistances) {
+    public Reservation(LocalDateTime date, Client client, List<CarAssistance> carAssistances) {
         this.date = date;
         this.client = client;
         this.carAssistances = carAssistances;

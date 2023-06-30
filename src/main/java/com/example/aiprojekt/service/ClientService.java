@@ -1,7 +1,7 @@
 package com.example.aiprojekt.service;
 
-import com.example.aiprojekt.Exception.ClientByIdNotFoundException;
-import com.example.aiprojekt.Exception.NameIsBussyException;
+import com.example.aiprojekt.exception.ClientByIdNotFoundException;
+import com.example.aiprojekt.exception.NameIsBussyException;
 import com.example.aiprojekt.dto.ClientDTO;
 import com.example.aiprojekt.dto.ClientRequest;
 import com.example.aiprojekt.models.Client;

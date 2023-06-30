@@ -1,4 +1,4 @@
-package com.example.aiprojekt.Exception;
+package com.example.aiprojekt.exception;
 
 public class FileNoExistException extends RuntimeException {
 

@@ -1,6 +1,6 @@
 package com.example.aiprojekt.utils.filestorage;
 
-import com.example.aiprojekt.Exception.CouldNotSaveFileException;
+import com.example.aiprojekt.exception.CouldNotSaveFileException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -6,13 +6,14 @@ import com.example.aiprojekt.models.Reservation;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 public class ReservationRequest {
     @NotBlank
-    Date date;
+    LocalDateTime date;
     @NotBlank
     String clientId;
 

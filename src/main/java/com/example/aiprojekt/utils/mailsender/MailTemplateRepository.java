@@ -1,6 +1,6 @@
 package com.example.aiprojekt.utils.mailsender;
 
-import com.example.aiprojekt.Exception.FileNoExistException;
+import com.example.aiprojekt.exception.FileNoExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;

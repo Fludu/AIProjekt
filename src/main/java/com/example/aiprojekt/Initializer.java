@@ -4,7 +4,10 @@ import com.example.aiprojekt.models.CarAssistance;
 import com.example.aiprojekt.models.Client;
 import com.example.aiprojekt.models.Role;
 import com.example.aiprojekt.models.User;
-import com.example.aiprojekt.repository.*;
+import com.example.aiprojekt.repository.CarAssistanceRepository;
+import com.example.aiprojekt.repository.ClientRepository;
+import com.example.aiprojekt.repository.RoleRepository;
+import com.example.aiprojekt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -42,17 +45,17 @@ public class Initializer {
 
 
     private void createEmployees() {
-        Client reservations1 = new Client("Arek", "Fluda", "fluda@wp.pl", "Rzeszow");
+        Client reservations1 = new Client("Arek", "Fluda", "arekflu@gmail.com", "Rzeszow");
         clientRepository.save(reservations1);
-        Client reservations2 = new Client("Kacper", "Roda", "roda@wp.pl", "Krk");
-        Client reservations3 = new Client("Kamil", "Zyla", "zyla@wp.pl", "Wwa");
+        Client reservations2 = new Client("Kacper", "Roda", "kacper.roda37@gmail.com", "Krk");
+        Client reservations3 = new Client("Kamil", "Zyla", "kamilzyla11@gmail.com", "Wwa");
         clientRepository.save(reservations2);
         clientRepository.save(reservations3);
 
     }
 
     private void createCarAssistance() {
-        CarAssistance reservations1 = new CarAssistance("12","Wymiana opon", 200, new ArrayList<>());
+        CarAssistance reservations1 = new CarAssistance("12", "Wymiana opon", 200, new ArrayList<>());
         carAssistanceRepository.save(reservations1);
         CarAssistance reservations2 = new CarAssistance("Naprawa hamulcow", 400);
         CarAssistance reservations3 = new CarAssistance("Naprawa silnika", 800);

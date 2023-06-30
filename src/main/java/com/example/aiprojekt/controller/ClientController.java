@@ -4,7 +4,7 @@ import com.example.aiprojekt.dto.ClientDTO;
 import com.example.aiprojekt.dto.ClientRequest;
 import com.example.aiprojekt.models.Client;
 import com.example.aiprojekt.service.ClientService;
-import com.example.aiprojekt.Exception.NameIsBussyException;
+import com.example.aiprojekt.exception.NameIsBussyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
