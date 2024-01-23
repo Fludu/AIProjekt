@@ -1,6 +1,6 @@
 package com.example.aiprojekt.security;
 
-record LoginCredentials(
+public record LoginCredentials(
         String username,
         String password
 ) {

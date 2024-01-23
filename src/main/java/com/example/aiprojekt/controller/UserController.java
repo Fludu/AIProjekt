@@ -2,6 +2,7 @@ package com.example.aiprojekt.controller;
 
 import com.example.aiprojekt.dto.UserCreateDto;
 import com.example.aiprojekt.dto.UserReadDto;
+import com.example.aiprojekt.security.LoginCredentials;
 import com.example.aiprojekt.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,9 @@ public class UserController {
     public ResponseEntity<UserReadDto> register(
             @Valid @RequestBody UserCreateDto userCreateDto) {
         return new ResponseEntity<>(userService.createUser(userCreateDto), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public void login(@RequestBody LoginCredentials credentials) {
     }
 }
