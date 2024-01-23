@@ -3,11 +3,22 @@ spring:
     username: postgres
     url: jdbc:postgresql://localhost:5433/Firmy
     password: '12345'
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
   jpa:
     hibernate:
       ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 cors:
   allowUrl: "*"
 jwt:
   secret: secret_code
   expirationTime: 30h
+
+rest:
+  connection:
+    connectionRequestTimeout: 5s
+    readTimeout: 10s
