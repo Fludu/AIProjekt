@@ -17,17 +17,3 @@ jwt:
 files-storage:
   path: 'AIProjekt/src/main/resources/files'
 
-mail:
-  admin: carclinic.superuser@gmail.com
-  sender:
-    password: jeaxxqzekdimquqx
-    debug: false
-    user: carclinic.superuser@gmail.com
-    host: smtp.gmail.com
-    port: 587
-  add-appointment:
-    subject: 'Dodano rezerwację usługi w serwisie CarClinic!'
-    pathToMessage: '/content/mail/addAppointment_pl.html'
-  cancel-appointment:
-    subject: 'Zgłoszenie w CarClinic zostało anulowane!'
-    pathToMessage: '/content/mail/cancelAppointment.html'
